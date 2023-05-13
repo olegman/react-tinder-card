@@ -1,8 +1,8 @@
 const React = require('react')
 const { useSpring, animated } = require('@react-spring/web')
 
-const height = window.innerHeight
-const width = window.innerWidth
+const height = typeof window !== 'undefined' ? window.innerHeight : 0;
+const width = typeof window !== 'undefined' ? window.innerWidth : 0;
 
 const settings = {
   maxTilt: 25, // in deg
@@ -212,14 +212,14 @@ const TinderCard = React.forwardRef(
         setSpringTarget.start({ xyrot: [gestureState.dx, gestureState.dy, rot], config: physics.touchResponsive })
       }
 
-      window.addEventListener(('mousemove'), (ev) => {
+      typeof window !== 'undefined' && window.addEventListener(('mousemove'), (ev) => {
         if (!isClicking) return
         const gestureState = gestureStateFromWebEvent(ev, startPositon, lastPosition, false)
         lastPosition = gestureState
         handleMove(gestureState)
       })
 
-      window.addEventListener(('mouseup'), (ev) => {
+      typeof window !== 'undefined' && window.addEventListener(('mouseup'), (ev) => {
         if (!isClicking) return
         isClicking = false
         handleSwipeReleased(setSpringTarget, lastPosition)
